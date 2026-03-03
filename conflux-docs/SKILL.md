@@ -91,5 +91,3 @@ For more concept links, see [reference.md](reference.md) in this skill.
 
 - **conflux-scan-rpc** — inspect txs, receipts, balances (read-only).
 - **conflux-dev** — deploy, verify contracts, integrate apps.
-- **conflux-send-tx** — send txs (user review required).
-- **conflux-agent-wallet** — generate wallet (no user key).
