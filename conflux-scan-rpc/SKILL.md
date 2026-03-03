@@ -103,5 +103,3 @@ Copy-paste patterns and full endpoint table: [api-endpoints.md](api-endpoints.md
 
 - **conflux-docs** — official doc links and concepts.
 - **conflux-dev** — deploy, verify, integrate apps.
-- **conflux-send-tx** — send txs (after user confirms).
-- **conflux-agent-wallet** — generate wallet (no user key).
