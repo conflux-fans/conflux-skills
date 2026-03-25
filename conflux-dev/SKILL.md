@@ -26,24 +26,9 @@ Docs: [Developer Quickstart](https://doc.confluxnetwork.org/docs/espace/Develope
 
 1. **Config** — Add eSpace networks (RPC + chain ID) to Hardhat/Foundry/Remix.
 2. **Build** — Compile Solidity as usual; no eSpace-specific compiler options.
-3. **Deploy** — Deploy to testnet first; use faucet for testnet CFX: https://efaucet.confluxnetwork.org/
-4. **Verify** — Use ConfluxScan (Etherscan-compatible). Hardhat: custom chains + `hardhat verify`. Foundry: `forge verify-contract` with `--verifier-url` to ConfluxScan API. See [reference-deploy-verify.md](reference-deploy-verify.md).
+3. **Deploy** — Deploy to testnet first; use faucet for testnet CFX: https://efaucet.confluxnetwork.org/ Check the original deployment reference before giving commands or config snippets: [reference-deploy-verify.md](reference-deploy-verify.md).
+4. **Verify** — Use ConfluxScan (Etherscan-compatible). Before giving verification commands or troubleshooting advice, check the original verification reference: [reference-deploy-verify.md](reference-deploy-verify.md).
 5. **Integrate** — Frontend: ethers/viem with eSpace RPC; Scaffold Conflux for full-stack. Wallet: MetaMask + add Conflux eSpace (User Guide). See [reference-apps.md](reference-apps.md).
-
-## Quick deploy
-
-**Hardhat:** Set `networks.eSpaceTestnet.url` and `chainId: 71` (or mainnet 1030). Run `npx hardhat run scripts/deploy.js --network eSpaceTestnet`.
-
-**Foundry:** `forge create --rpc-url https://evmtestnet.confluxrpc.com src/Contract.sol:Contract --private-key <KEY>`.
-
-**Remix:** Add Conflux eSpace Testnet in MetaMask (chain ID 71, RPC above), then deploy via "Injected Provider".
-
-## Verify on ConfluxScan
-
-- **Hardhat:** Configure `etherscan` with ConfluxScan API URL and run `npx hardhat verify --network <network> <address> [constructor args]`.
-- **Foundry:** `forge verify-contract <address> <ContractName> --verifier-url https://evmapi-testnet.confluxscan.org/api/ --etherscan-api-key any` (do not pass chain ID).
-
-Details and config snippets: [reference-deploy-verify.md](reference-deploy-verify.md).
 
 ## App integration
 

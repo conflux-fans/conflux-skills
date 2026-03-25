@@ -48,6 +48,8 @@ module.exports = {
 
 ### Verify
 
+See [Gotchas](#gotchas) for verification caveats.
+
 ```bash
 npx hardhat verify --network eSpaceTestnet <CONTRACT_ADDRESS> [constructor arg1 arg2 ...]
 ```
@@ -74,6 +76,8 @@ forge create src/MyContract.sol:MyContract \
 
 Do **not** pass `--chain-id`. Use ConfluxScan verifier URL:
 
+See [Gotchas](#gotchas) for verification caveats.
+
 ```bash
 # Testnet
 forge verify-contract <CONTRACT_ADDRESS> MyContract \
@@ -99,5 +103,9 @@ Doc: https://doc.confluxnetwork.org/docs/espace/tutorials/deployContract/remix
 
 ## Gotchas
 
+- **Verification failures:** Verification must use the same compiler version and build settings as deployment. If verification fails, confirm solc version and `optimizer.runs` (or equivalent) match what was used when deploying. Compare against the actual deployment inputs, especially if the repo also contains other framework configs or custom `solc` scripts.
+- **Bytecode comparison:** When debugging verification, compare like with like. Local artifacts often include creation bytecode, while RPC methods and explorers return deployed runtime bytecode.
+- **`evmVersion` compatibility:** If verification tooling exposes `evmVersion`, omit it unless deployment used a specific non-default EVM version. ConfluxScan may reject `evmversion=default`.
 - **Foundry verify:** Do **not** pass `--chain-id`; ConfluxScan verification ignores it and it can break the request. Use only `--verifier-url` and `--etherscan-api-key`.
-- **Verification failures:** Compiler version and optimization settings must match the deployment. If verification fails, confirm solc version and `optimizer.runs` (or equivalent) match what was used when deploying. See [Verify contracts](https://doc.confluxnetwork.org/docs/espace/tutorials/VerifyContracts).
+
+See [Verify contracts](https://doc.confluxnetwork.org/docs/espace/tutorials/VerifyContracts).
