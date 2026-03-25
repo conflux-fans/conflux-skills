@@ -64,11 +64,13 @@ If constructor has no args, omit the trailing arguments.
 # Testnet
 forge create src/MyContract.sol:MyContract \
   --rpc-url https://evmtestnet.confluxrpc.com \
+  --gas-estimate-multiplier 200 \
   --private-key $PRIVATE_KEY
 
 # Mainnet
 forge create src/MyContract.sol:MyContract \
   --rpc-url https://evm.confluxrpc.com \
+  --gas-estimate-multiplier 200 \
   --private-key $PRIVATE_KEY
 ```
 
@@ -107,5 +109,6 @@ Doc: https://doc.confluxnetwork.org/docs/espace/tutorials/deployContract/remix
 - **Bytecode comparison:** When debugging verification, compare like with like. Local artifacts often include creation bytecode, while RPC methods and explorers return deployed runtime bytecode.
 - **`evmVersion` compatibility:** If verification tooling exposes `evmVersion`, omit it unless deployment used a specific non-default EVM version. ConfluxScan may reject `evmversion=default`.
 - **Foundry verify:** Do **not** pass `--chain-id`; ConfluxScan verification ignores it and it can break the request. Use only `--verifier-url` and `--etherscan-api-key`.
+- **Foundry deploy gas estimation:** On Conflux eSpace, some opcodes are charged higher gas, so Foundry's default estimate can be too low on both testnet and mainnet. Explicitly recommend `--gas-estimate-multiplier 200` for deployment and upgrade broadcasts to avoid `VmError(OutOfGas)`.
 
 See [Verify contracts](https://doc.confluxnetwork.org/docs/espace/tutorials/VerifyContracts).

@@ -26,7 +26,7 @@ Docs: [Developer Quickstart](https://doc.confluxnetwork.org/docs/espace/Develope
 
 1. **Config** — Add eSpace networks (RPC + chain ID) to Hardhat/Foundry/Remix.
 2. **Build** — Compile Solidity as usual; no eSpace-specific compiler options.
-3. **Deploy** — Deploy to testnet first; use faucet for testnet CFX: https://efaucet.confluxnetwork.org/ Check the original deployment reference before giving commands or config snippets: [reference-deploy-verify.md](reference-deploy-verify.md).
+3. **Deploy** — Deploy to testnet first; use faucet for testnet CFX: https://efaucet.confluxnetwork.org/ For Foundry deployments on Conflux eSpace, explicitly recommend `--gas-estimate-multiplier 200` on both testnet and mainnet because some opcodes are charged higher gas and the default estimate can be too low. Check the original deployment reference before giving commands or config snippets: [reference-deploy-verify.md](reference-deploy-verify.md).
 4. **Verify** — Use ConfluxScan (Etherscan-compatible). Before giving verification commands or troubleshooting advice, check the original verification reference: [reference-deploy-verify.md](reference-deploy-verify.md).
 5. **Integrate** — Frontend: ethers/viem with eSpace RPC; Scaffold Conflux for full-stack. Wallet: MetaMask + add Conflux eSpace (User Guide). See [reference-apps.md](reference-apps.md).
 
