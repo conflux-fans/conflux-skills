@@ -7,6 +7,10 @@ Small collection of reusable Codex skills for Conflux-related development workfl
 ```text
 .
 ├── README.md
+├── conflux-dev/
+│   ├── SKILL.md
+│   ├── reference-apps.md
+│   └── reference-deploy-verify.md
 ├── conflux-docs/
 │   ├── SKILL.md
 │   └── reference.md
@@ -20,6 +24,14 @@ Small collection of reusable Codex skills for Conflux-related development workfl
 ```
 
 ## Available skills
+
+### conflux-dev
+
+Build, deploy, verify smart contracts, and integrate frontends or wallets with Conflux eSpace using standard EVM tooling such as Hardhat, Foundry, Remix, ethers, and viem.
+
+```sh
+npx skills add https://github.com/conflux-fans/conflux-skills --skill conflux-dev
+```
 
 ### conflux-rust-integration-test
 
@@ -47,5 +59,7 @@ npx skills add https://github.com/conflux-fans/conflux-skills --skill conflux-sc
 
 ## Notes
 
+- `conflux-dev/reference-apps.md` contains frontend, wallet, and app integration references for Conflux eSpace.
+- `conflux-dev/reference-deploy-verify.md` contains Hardhat, Foundry, and Remix deployment and verification references.
 - `conflux-rust-integration-test/assets/` contains test templates and examples.
 - `conflux-rust-integration-test/references/` contains detailed testing references.
