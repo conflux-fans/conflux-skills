@@ -48,6 +48,8 @@ module.exports = {
 
 ### Verify
 
+See [Gotchas](#gotchas) for verification caveats.
+
 ```bash
 npx hardhat verify --network eSpaceTestnet <CONTRACT_ADDRESS> [constructor arg1 arg2 ...]
 ```
@@ -62,17 +64,21 @@ If constructor has no args, omit the trailing arguments.
 # Testnet
 forge create src/MyContract.sol:MyContract \
   --rpc-url https://evmtestnet.confluxrpc.com \
+  --gas-estimate-multiplier 200 \
   --private-key $PRIVATE_KEY
 
 # Mainnet
 forge create src/MyContract.sol:MyContract \
   --rpc-url https://evm.confluxrpc.com \
+  --gas-estimate-multiplier 200 \
   --private-key $PRIVATE_KEY
 ```
 
 ### Verify
 
 Do **not** pass `--chain-id`. Use ConfluxScan verifier URL:
+
+See [Gotchas](#gotchas) for verification caveats.
 
 ```bash
 # Testnet
@@ -99,5 +105,10 @@ Doc: https://doc.confluxnetwork.org/docs/espace/tutorials/deployContract/remix
 
 ## Gotchas
 
+- **Verification failures:** Verification must use the same compiler version and build settings as deployment. If verification fails, confirm solc version and `optimizer.runs` (or equivalent) match what was used when deploying. Compare against the actual deployment inputs, especially if the repo also contains other framework configs or custom `solc` scripts.
+- **Bytecode comparison:** When debugging verification, compare like with like. Local artifacts often include creation bytecode, while RPC methods and explorers return deployed runtime bytecode.
+- **`evmVersion` compatibility:** If verification tooling exposes `evmVersion`, omit it unless deployment used a specific non-default EVM version. ConfluxScan may reject `evmversion=default`.
 - **Foundry verify:** Do **not** pass `--chain-id`; ConfluxScan verification ignores it and it can break the request. Use only `--verifier-url` and `--etherscan-api-key`.
-- **Verification failures:** Compiler version and optimization settings must match the deployment. If verification fails, confirm solc version and `optimizer.runs` (or equivalent) match what was used when deploying. See [Verify contracts](https://doc.confluxnetwork.org/docs/espace/tutorials/VerifyContracts).
+- **Foundry deploy gas estimation:** On Conflux eSpace, some opcodes are charged higher gas, so Foundry's default estimate can be too low on both testnet and mainnet. Explicitly recommend `--gas-estimate-multiplier 200` for deployment and upgrade broadcasts to avoid `VmError(OutOfGas)`.
+
+See [Verify contracts](https://doc.confluxnetwork.org/docs/espace/tutorials/VerifyContracts).
