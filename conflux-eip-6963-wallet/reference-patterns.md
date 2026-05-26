@@ -35,7 +35,7 @@ export const confluxESpaceMainnet = defineChain({
 ## Provider registry hook (React)
 
 ```javascript
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 
 export function useEip6963Providers() {
   const [providers, setProviders] = useState([]);
@@ -75,10 +75,27 @@ export async function connectWallet(selectedProvider, targetChain = confluxESpac
   const chainId = Number(chainIdHex);
 
   if (chainId !== targetChain.id) {
-    await selectedProvider.request({
-      method: "wallet_switchEthereumChain",
-      params: [{ chainId: `0x${targetChain.id.toString(16)}` }],
-    });
+    try {
+      await selectedProvider.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: `0x${targetChain.id.toString(16)}` }],
+      });
+    } catch (err) {
+      // 4902 = chain not added in wallet; add it then retry switch.
+      // See "wallet_addEthereumChain params" below for the params object.
+      if (err?.code === 4902) {
+        await selectedProvider.request({
+          method: "wallet_addEthereumChain",
+          params: [buildAddChainParams(targetChain)],
+        });
+        await selectedProvider.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: `0x${targetChain.id.toString(16)}` }],
+        });
+      } else {
+        throw err;
+      }
+    }
   }
 
   const walletClient = createWalletClient({
@@ -132,21 +149,24 @@ function WalletSelector({ providers, onSelect }) {
 }
 ```
 
-## Add Conflux eSpace to wallet (switch fails)
+## wallet_addEthereumChain params
 
-If `wallet_switchEthereumChain` returns error 4902, add the chain first:
+Provide this object to `wallet_addEthereumChain` (used by `connectWallet` above when switch fails with error 4902):
 
 ```javascript
-await selectedProvider.request({
-  method: "wallet_addEthereumChain",
-  params: [{
-    chainId: "0x47", // 71 testnet; use 0x406 for 1030 mainnet
-    chainName: "Conflux eSpace Testnet",
+function buildAddChainParams(chain) {
+  const params = {
+    chainId: `0x${chain.id.toString(16)}`, // 71 → "0x47", 1030 → "0x406"
+    chainName: chain.name,
     nativeCurrency: { name: "CFX", symbol: "CFX", decimals: 18 },
-    rpcUrls: ["https://evmtestnet.confluxrpc.com"],
-    blockExplorerUrls: ["https://evmtestnet.confluxscan.org"],
-  }],
-});
+    rpcUrls: chain.rpcUrls.default.http,
+  };
+
+  const explorerUrl = chain.blockExplorers?.default?.url;
+  if (explorerUrl) params.blockExplorerUrls = [explorerUrl];
+
+  return params;
+}
 ```
 
 ## Expected outcome vs legacy default

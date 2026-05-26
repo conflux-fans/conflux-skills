@@ -21,7 +21,7 @@ Small collection of reusable Codex skills for Conflux-related development workfl
 ├── conflux-scan-rpc/
 │   ├── SKILL.md
 │   └── api-endpoints.md
-├── eip-6963-wallet-discovery/
+├── conflux-eip-6963-wallet/
 │   ├── SKILL.md
 │   └── reference-patterns.md
 ```
@@ -60,12 +60,12 @@ Run read-only Conflux eSpace state inspection workflows (transactions, receipts,
 npx skills add https://github.com/conflux-fans/conflux-skills --skill conflux-scan-rpc
 ```
 
-### eip-6963-wallet-discovery
+### conflux-eip-6963-wallet
 
-Generate modern multi-wallet connect flows with EIP-6963 instead of legacy `window.ethereum`. Recommended alongside **conflux-dev** when AI builds Conflux eSpace dApp frontends.
+Generate modern multi-wallet connect flows with EIP-6963 instead of legacy `window.ethereum`. Use when asking AI to build or modify a dApp frontend with wallet connect.
 
 ```sh
-npx skills add https://github.com/conflux-fans/conflux-skills --skill eip-6963-wallet-discovery
+npx skills add https://github.com/conflux-fans/conflux-skills --skill conflux-eip-6963-wallet
 ```
 
 ## Notes
@@ -74,4 +74,4 @@ npx skills add https://github.com/conflux-fans/conflux-skills --skill eip-6963-w
 - `conflux-dev/reference-deploy-verify.md` contains Hardhat, Foundry, and Remix deployment and verification references.
 - `conflux-rust-integration-test/assets/` contains test templates and examples.
 - `conflux-rust-integration-test/references/` contains detailed testing references.
-- `eip-6963-wallet-discovery/reference-patterns.md` contains React + viem + Conflux eSpace wallet discovery patterns.
+- `conflux-eip-6963-wallet/reference-patterns.md` contains React + viem + Conflux eSpace wallet discovery patterns.
