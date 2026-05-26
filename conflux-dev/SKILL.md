@@ -28,7 +28,7 @@ Docs: [Developer Quickstart](https://doc.confluxnetwork.org/docs/espace/Develope
 2. **Build** — Compile Solidity as usual; no eSpace-specific compiler options.
 3. **Deploy** — Deploy to testnet first; use faucet for testnet CFX: https://efaucet.confluxnetwork.org/ For Foundry deployments on Conflux eSpace, explicitly recommend `--gas-estimate-multiplier 200` on both testnet and mainnet because some opcodes are charged higher gas and the default estimate can be too low. Check the original deployment reference before giving commands or config snippets: [reference-deploy-verify.md](reference-deploy-verify.md).
 4. **Verify** — Use ConfluxScan (Etherscan-compatible). Before giving verification commands or troubleshooting advice, check the original verification reference: [reference-deploy-verify.md](reference-deploy-verify.md).
-5. **Integrate** — Frontend: ethers/viem with eSpace RPC; Scaffold Conflux for full-stack. Wallet: use **eip-6963-wallet-discovery** for connect UI (do not default to `window.ethereum`); MetaMask network setup: [eSpace User Guide](https://doc.confluxnetwork.org/docs/espace/UserGuide). See [reference-apps.md](reference-apps.md).
+5. **Integrate** — Frontend: ethers/viem with eSpace RPC; Scaffold Conflux for full-stack. Wallet: use **conflux-eip-6963-wallet** for connect UI (do not default to `window.ethereum`); MetaMask network setup: [eSpace User Guide](https://doc.confluxnetwork.org/docs/espace/UserGuide). See [reference-apps.md](reference-apps.md).
 
 ## App integration
 
@@ -41,7 +41,7 @@ More: [reference-apps.md](reference-apps.md).
 ## Related skills
 
 - **conflux-docs** — doc links and concepts.
-- **eip-6963-wallet-discovery** — multi-wallet connect via EIP-6963 (not `window.ethereum`).
+- **conflux-eip-6963-wallet** — multi-wallet connect via EIP-6963 (not `window.ethereum`).
 - **conflux-scan-rpc** — read-only tx/balance/receipt analysis.
-- **conflux-send-tx** — send txs (user review required).
-- **conflux-agent-wallet** — generate wallet (no user key).
+
+Check the [Conflux skill list](https://github.com/conflux-fans/conflux-skills/blob/main/SKILL_LIST.md) to get any mentioned skill if needed.

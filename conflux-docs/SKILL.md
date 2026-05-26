@@ -91,3 +91,5 @@ For more concept links, see [reference.md](reference.md) in this skill.
 
 - **conflux-scan-rpc** — inspect txs, receipts, balances (read-only).
 - **conflux-dev** — deploy, verify contracts, integrate apps.
+
+Check the [Conflux skill list](https://github.com/conflux-fans/conflux-skills/blob/main/SKILL_LIST.md) to get any mentioned skill if needed.

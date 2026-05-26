@@ -54,3 +54,9 @@ metadata:
 ### assets/
 - `basic_test_template.py`: Starter template for a new integration test module.
 - `custom_block_example.py`: Minimal custom block example.
+
+## Related skills
+
+No required related skills.
+
+Check the [Conflux skill list](https://github.com/conflux-fans/conflux-skills/blob/main/SKILL_LIST.md) to get any mentioned skill if needed.

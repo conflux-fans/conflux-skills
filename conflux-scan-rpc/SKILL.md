@@ -103,3 +103,5 @@ Copy-paste patterns and full endpoint table: [api-endpoints.md](api-endpoints.md
 
 - **conflux-docs** — official doc links and concepts.
 - **conflux-dev** — deploy, verify, integrate apps.
+
+Check the [Conflux skill list](https://github.com/conflux-fans/conflux-skills/blob/main/SKILL_LIST.md) to get any mentioned skill if needed.

@@ -45,3 +45,5 @@ Full React + viem + Conflux eSpace patterns (chain definition, `useEip6963Provid
 
 - **conflux-dev** — eSpace RPC, chain IDs, app integration.
 - **conflux-scan-rpc** — inspect tx / balance / receipt (read-only).
+
+Check the [Conflux skill list](https://github.com/conflux-fans/conflux-skills/blob/main/SKILL_LIST.md) to get any mentioned skill if needed.
