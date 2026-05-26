@@ -7,6 +7,7 @@ Small collection of reusable Codex skills for Conflux-related development workfl
 ```text
 .
 ├── README.md
+├── SKILL_LIST.md
 ├── conflux-dev/
 │   ├── SKILL.md
 │   ├── reference-apps.md
@@ -27,6 +28,8 @@ Small collection of reusable Codex skills for Conflux-related development workfl
 ```
 
 ## Available skills
+
+See [SKILL_LIST.md](SKILL_LIST.md) for the central list of all skills, GitHub URLs, and install commands.
 
 ### conflux-dev
 

@@ -62,9 +62,9 @@ Scaffold Conflux is an adaptation of Scaffold-ETH-2 for Conflux.
 
 ## Wallet integration
 
-**For AI-generated dApp frontends:** use the **eip-6963-wallet-discovery** skill. Models default to legacy `window.ethereum`; EIP-6963 enables multi-wallet discovery (MetaMask, Fluent, Rabby, etc.) with proper provider lifecycle.
+**For AI-generated dApp frontends:** use the **conflux-eip-6963-wallet** skill. Models default to legacy `window.ethereum`; EIP-6963 enables multi-wallet discovery (MetaMask, Fluent, Rabby, etc.) with proper provider lifecycle.
 
-Patterns: see `eip-6963-wallet-discovery/reference-patterns.md` in this repo.
+Check the [Conflux skill list](https://github.com/conflux-fans/conflux-skills/blob/main/SKILL_LIST.md) to get the skill if needed. Patterns: see [conflux-eip-6963-wallet/reference-patterns.md](https://github.com/conflux-fans/conflux-skills/blob/main/conflux-eip-6963-wallet/reference-patterns.md).
 
 ### MetaMask network setup
 
