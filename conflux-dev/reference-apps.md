@@ -60,7 +60,13 @@ Scaffold Conflux is an adaptation of Scaffold-ETH-2 for Conflux.
 - Deploy: `yarn deploy --network confluxESpace` (or confluxESpaceTestnet if configured)
 - Frontend: set `targetNetworks: [chains.confluxESpace]` in scaffold config so wallet connects to Conflux eSpace
 
-## Wallet (MetaMask)
+## Wallet integration
+
+**For AI-generated dApp frontends:** use the **eip-6963-wallet-discovery** skill. Models default to legacy `window.ethereum`; EIP-6963 enables multi-wallet discovery (MetaMask, Fluent, Rabby, etc.) with proper provider lifecycle.
+
+Patterns: see `eip-6963-wallet-discovery/reference-patterns.md` in this repo.
+
+### MetaMask network setup
 
 1. Add network: Conflux eSpace Testnet — RPC https://evmtestnet.confluxrpc.com, chain ID 71, symbol CFX, block explorer https://evmtestnet.confluxscan.org
 2. Mainnet: RPC https://evm.confluxrpc.com, chain ID 1030, explorer https://evm.confluxscan.org
