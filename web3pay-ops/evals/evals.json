@@ -1,0 +1,23 @@
+{
+  "skill_name": "web3pay-ops",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Give me the dry-run cast command to airdrop one Confura RPC Standard/month key to 0x1111111111111111111111111111111111111111.",
+      "expected_output": "Uses the confura-rpc app, template 10001, a direct address=count recipient argument, CardShop.giveCardBatch, Conflux eSpace mainnet RPC, and dry-run behavior without requiring a private key.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Check whether 0x1111111111111111111111111111111111111111 has an active ConfluxScan API subscription.",
+      "expected_output": "Uses the confluxscan-api tracker getVipInfo call and reports status, expireAt timestamp, local date, and raw result.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Generate the Web3 Paywall API key for Confura RPC with my local signer.",
+      "expected_output": "Signs the exact Web3 Paywall message for the Confura app and base58-encodes the signature bytes, while avoiding storing private keys.",
+      "files": []
+    }
+  ]
+}

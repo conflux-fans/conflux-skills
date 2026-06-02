@@ -25,6 +25,12 @@ Small collection of reusable Codex skills for Conflux-related development workfl
 ├── conflux-eip-6963-wallet/
 │   ├── SKILL.md
 │   └── reference-patterns.md
+├── web3pay-ops/
+│   ├── SKILL.md
+│   ├── evals/
+│   ├── examples/
+│   ├── references/
+│   └── scripts/
 ```
 
 ## Available skills
@@ -71,6 +77,14 @@ Generate modern multi-wallet connect flows with EIP-6963 instead of legacy `wind
 npx skills add https://github.com/conflux-fans/conflux-skills --skill conflux-eip-6963-wallet
 ```
 
+### web3pay-ops
+
+Operate Conflux Web3 Paywall RPC/API key subscriptions, including Confura RPC and ConfluxScan API airdrops, validity checks, and API key claim workflows.
+
+```sh
+npx skills add https://github.com/conflux-fans/conflux-skills --skill web3pay-ops
+```
+
 ## Notes
 
 - `conflux-dev/reference-apps.md` contains frontend, wallet, and app integration references for Conflux eSpace.
@@ -78,3 +92,5 @@ npx skills add https://github.com/conflux-fans/conflux-skills --skill conflux-ei
 - `conflux-rust-integration-test/assets/` contains test templates and examples.
 - `conflux-rust-integration-test/references/` contains detailed testing references.
 - `conflux-eip-6963-wallet/reference-patterns.md` contains React + viem + Conflux eSpace wallet discovery patterns.
+- `web3pay-ops/references/` contains Web3 Paywall app, contract, template, and frontend data-source references.
+- `web3pay-ops/scripts/web3pay-ops.sh` contains reusable helpers for airdrops, validity checks, and API key claims.
