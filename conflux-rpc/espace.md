@@ -1,5 +1,10 @@
 # eSpace
 
+## eSpace Status in v1
+
+This file is navigation-only in v1.
+Do not treat it as complete eSpace implementation guidance.
+
 > v1 navigation-only placeholder: this page is intentionally a routing index for quick navigation, not a full RPC encyclopedia.
 
 ## Official Entry
@@ -16,6 +21,7 @@
 
 ## Semantic Boundary (Core vs eSpace)
 
+- Choose tooling and methods based on space first.
 - Do not directly copy Core Space semantics to eSpace.
 - Do not assume `cfx_*` naming, parameter interpretation, or error patterns apply to `eth_*` endpoints.
 - When behavior differs, prioritize eSpace documentation and method-specific notes.
