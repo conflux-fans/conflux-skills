@@ -1,6 +1,6 @@
 ---
 name: conflux-rpc
-description: Core Space-first Conflux RPC guidance with Core/eSpace routing, read-write troubleshooting flows, and safe defaults. Use when users ask for Conflux RPC methods, call/send flows, tx debugging, or space-specific command choices.
+description: Conflux RPC guidance with fully guided Core Space workflows and v1 eSpace navigation-only routing. Use when users ask for Conflux RPC method selection, call/send flows, transaction debugging, or Core vs eSpace command direction.
 ---
 
 # conflux-rpc
@@ -15,7 +15,7 @@ description: Core Space-first Conflux RPC guidance with Core/eSpace routing, rea
 ## Intake
 
 - Ask first when user did not specify space. Do not assume Core or eSpace from method names alone.
-- Use a short routing question: "你要操作 Core Space 还是 eSpace？网络是 mainnet 还是 testnet？"
+- Use a short routing question: "Are you operating in Core Space or eSpace? Is the network mainnet or testnet?"
 - Collect minimum context before execution:
   - Space (`core` or `espace`)
   - Network (`mainnet`/`testnet` and RPC endpoint)
@@ -43,13 +43,21 @@ description: Core Space-first Conflux RPC guidance with Core/eSpace routing, rea
 ## Safety Defaults
 
 - Always confirm network before any write action. Never send writes to an implied endpoint.
-- For Core Space writes, require preflight `cfx_estimateGasAndCollateral` before constructing or sending transactions.
+- For Core Space writes, use preflight `cfx_estimateGasAndCollateral` as the default path before constructing or sending transactions.
+- If a special flow skips this call, explain why first and run equivalent safety checks before writing.
 - If estimation fails, stop and debug root cause before retrying writes.
 - Show explicit mainnet risk warning before write operations:
   - transactions are irreversible once finalized
   - real asset loss is possible on parameter mistakes
   - user should verify to/from address, value, gas-related fields, and nonce assumptions
 - Prefer read-only reproduction first when debugging ambiguous failures.
+
+## Related skills
+
+- `conflux-scan-rpc` for read-only on-chain inspection and transaction state checks.
+- `conflux-docs` for official Conflux documentation navigation and source grounding.
+- `conflux-dev` for contract build, deploy, and integration workflows.
+- For cross-skill discovery and install details, see `SKILL_LIST.md`.
 
 ## Official References
 
