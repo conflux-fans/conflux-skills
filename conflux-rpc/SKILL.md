@@ -43,8 +43,8 @@ description: Conflux RPC guidance with fully guided Core Space workflows and v1 
 ## Safety Defaults
 
 - Always confirm network before any write action. Never send writes to an implied endpoint.
-- For Core Space writes, use preflight `cfx_estimateGasAndCollateral` as the default path before constructing or sending transactions.
-- If a special flow skips this call, explain why first and run equivalent safety checks before writing.
+- For Core Space writes, preflight `cfx_estimateGasAndCollateral` is required before send; do not construct or send transactions until it succeeds.
+- Do not skip this preflight in v1.
 - If estimation fails, stop and debug root cause before retrying writes.
 - Show explicit mainnet risk warning before write operations:
   - transactions are irreversible once finalized
