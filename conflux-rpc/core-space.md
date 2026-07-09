@@ -15,11 +15,11 @@ import { Conflux } from "js-conflux-sdk";
 
 const conflux = new Conflux({
   url: process.env.CFX_RPC_URL,
-  networkId: Number(process.env.CFX_NETWORK_ID || 1),
+  networkId: Number(process.env.CFX_CHAIN_ID || 1029),
 });
 
 const address = "cfx:aarc9abycue0hhzgyrr53m6cxedgccrmmyybjgh4xg";
-const balance = await conflux.getBalance(address, "latest_state");
+const balance = await conflux.cfx.getBalance(address, "latest_state");
 console.log(balance.toString());
 ```
 
@@ -144,7 +144,7 @@ import { Conflux } from "js-conflux-sdk";
 
 const conflux = new Conflux({
   url: process.env.CFX_RPC_URL,
-  networkId: Number(process.env.CFX_NETWORK_ID || 1),
+  networkId: Number(process.env.CFX_CHAIN_ID || 1029),
 });
 
 const sender = conflux.wallet.addPrivateKey(process.env.CFX_PRIVATE_KEY);
@@ -165,23 +165,24 @@ if (!estimation || !estimation.gasLimit || !estimation.storageCollateralized) {
 }
 
 // 3) network/sender check
+const expectedChainId = Number(process.env.CFX_CHAIN_ID || 1029);
 const [status, nextNonce] = await Promise.all([
   conflux.cfx.getStatus(),
   conflux.cfx.getNextNonce(senderAddress),
 ]);
 
-if (status.chainId !== Number(process.env.CFX_CHAIN_ID || 1029)) {
+if (status.chainId !== expectedChainId) {
   throw new Error(`Network mismatch: ${status.chainId}`);
 }
 
 // 4) send tx
-const pending = await conflux.cfx.sendTransaction({
+const pending = conflux.cfx.sendTransaction({
   ...txParams,
   gas: estimation.gasLimit,
   storageLimit: estimation.storageCollateralized,
   nonce: nextNonce,
 });
-const txHash = pending.transactionHash;
+const txHash = await pending;
 console.log("sent", txHash);
 
 // 5) receipt verify
@@ -194,6 +195,8 @@ console.log("confirmed", receipt);
 
 Quick `cast rpc` checks:
 
+`cast rpc` is suitable for RPC inspection and read/call verification. Do not treat `cast` as a full Core Space raw transaction flow (build + sign + send + confirm). For signed sending, follow `js-conflux-sdk` or native Core Space signing workflow and then use `cfx_sendRawTransaction`.
+
 ```bash
 cast rpc cfx_estimateGasAndCollateral \
   '{"from":"cfx:...","to":"cfx:...","value":"0x0","data":"0x"}' \
@@ -202,6 +205,11 @@ cast rpc cfx_estimateGasAndCollateral \
 cast rpc cfx_sendRawTransaction 0xSIGNED_RAW_TX --rpc-url "$CFX_RPC_URL"
 cast rpc cfx_getTransactionReceipt 0xYOUR_TX_HASH --rpc-url "$CFX_RPC_URL"
 ```
+
+Mainnet write risk warning:
+
+- Mainnet writes are irreversible and may consume real CFX (gas + storage collateral).
+- Run the same flow on testnet first and verify `to`, `data`, `value`, nonce, and chain ID before mainnet execution.
 
 ## Troubleshooting
 
