@@ -52,6 +52,15 @@ description: Conflux RPC guidance with fully guided Core Space workflows and v1 
   - user should verify to/from address, value, gas-related fields, and nonce assumptions
 - Prefer read-only reproduction first when debugging ambiguous failures.
 
+## Reference Files
+
+Load only the file that matches the user's space and task:
+
+- [core-space.md](core-space.md) — Core Space read/write workflows, estimation gate, and troubleshooting.
+- [espace.md](espace.md) — eSpace v1 navigation index and official entry links.
+- [shared-concepts.md](shared-concepts.md) — Address formats, units, read/write boundaries, and mainnet risk template.
+- [network-matrix.md](network-matrix.md) — Verified network mapping and official RPC/explorer entry links.
+
 ## Related skills
 
 - `conflux-scan-rpc` for read-only on-chain inspection and transaction state checks.
@@ -63,8 +72,8 @@ description: Conflux RPC guidance with fully guided Core Space workflows and v1 
 
 - JSON-RPC portal (entry): <https://doc.confluxnetwork.org/docs/core/build/json-rpc/>
 - `cfx_*` methods: <https://doc.confluxnetwork.org/docs/core/build/json-rpc/cfx-namespace>
-- `pos_*` methods: <https://doc.confluxnetwork.org/docs/core/build/json-rpc/pos-namespace>
-- `trace_*` methods: <https://doc.confluxnetwork.org/docs/core/build/json-rpc/trace-namespace>
+- `pos_*` methods: <https://doc.confluxnetwork.org/docs/core/build/json-rpc/pos_rpc>
+- `trace_*` methods: <https://doc.confluxnetwork.org/docs/core/build/json-rpc/trace_rpc>
 - Pub/Sub: <https://doc.confluxnetwork.org/docs/core/build/json-rpc/pubsub>
 - Common errors: <https://doc.confluxnetwork.org/docs/core/build/json-rpc/common_rpc_error>
-- Enums and shared types: <https://doc.confluxnetwork.org/docs/core/build/json-rpc/rpc-types-and-enums>
+- Enums and shared types: <https://doc.confluxnetwork.org/docs/core/build/json-rpc/common-enums>

@@ -32,6 +32,22 @@ cast rpc cfx_getBalance \
   --rpc-url "$CFX_RPC_URL"
 ```
 
+`curl` JSON-RPC fallback:
+
+```bash
+curl -s "$CFX_RPC_URL" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "cfx_getBalance",
+    "params": [
+      "cfx:aarc9abycue0hhzgyrr53m6cxedgccrmmyybjgh4xg",
+      "latest_state"
+    ]
+  }'
+```
+
 ### Account (`cfx_getAccount`)
 
 `js-conflux-sdk`:
@@ -160,7 +176,7 @@ const txParams = {
 
 // 2) estimate first (required)
 const estimation = await conflux.cfx.estimateGasAndCollateral(txParams);
-if (!estimation || !estimation.gasLimit || !estimation.storageCollateralized) {
+if (!estimation || !estimation.gasUsed || !estimation.storageCollateralized) {
   throw new Error("cfx_estimateGasAndCollateral failed; stop sending.");
 }
 
@@ -178,7 +194,7 @@ if (status.chainId !== expectedChainId) {
 // 4) send tx
 const pending = conflux.cfx.sendTransaction({
   ...txParams,
-  gas: estimation.gasLimit,
+  gas: estimation.gasUsed,
   storageLimit: estimation.storageCollateralized,
   nonce: nextNonce,
 });

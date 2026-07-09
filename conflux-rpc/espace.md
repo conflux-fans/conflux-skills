@@ -9,15 +9,16 @@ Do not treat it as complete eSpace implementation guidance.
 
 ## Official Entry
 
-- Main eSpace entry: https://doc.confluxnetwork.org/docs/espace
+- Main eSpace entry: https://doc.confluxnetwork.org/docs/espace/DeveloperQuickstart
 - Common `eth_*` RPC methods entry: https://doc.confluxnetwork.org/docs/espace/build/jsonrpc-compatibility
-- Tx/receipt/logs troubleshooting entry: https://doc.confluxnetwork.org/docs/espace/build/troubleshooting
+- Network endpoints: https://doc.confluxnetwork.org/docs/espace/network-endpoints
+- Tx/receipt/logs troubleshooting entry: https://doc.confluxnetwork.org/docs/general/faq/community-faqs/#how-to-check-the-reason-for-transaction-failure
 
 ## Recommended Reading Order
 
-1. Start from the main eSpace entry to understand environment, account model, and network context.
+1. Start from the Developer Quickstart to understand environment, tooling, and network context.
 2. Then read the common `eth_*` methods entry for day-to-day query and transaction APIs.
-3. Use the tx/receipt/logs troubleshooting entry when diagnosing pending tx, failed receipt, or missing log issues.
+3. Use the community FAQ entry (and `conflux-scan-rpc` for read-only receipt/log inspection) when diagnosing pending tx, failed receipt, or missing log issues.
 
 ## Semantic Boundary (Core vs eSpace)
 
