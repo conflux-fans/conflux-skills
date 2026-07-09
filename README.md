@@ -25,7 +25,9 @@ Small collection of reusable Codex skills for Conflux-related development workfl
 ├── conflux-rpc/
 │   ├── SKILL.md
 │   ├── core-space.md
-│   └── espace.md
+│   ├── espace.md
+│   ├── network-matrix.md
+│   └── shared-concepts.md
 ├── conflux-eip-6963-wallet/
 │   ├── SKILL.md
 │   └── reference-patterns.md
