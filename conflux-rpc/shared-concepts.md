@@ -20,7 +20,8 @@ Conflux has two logically independent spaces with different address encodings. D
 
 Normalization notes:
 
-- Treat address prefix as a network signal. A `cfx:` address is Core mainnet; `cfxtest:` is Core testnet. A `0x` address belongs to eSpace, not Core.
+- Treat address prefix as a network signal. A `cfx:` address is Core mainnet; `cfxtest:` is Core testnet.
+- A `0x` hex40 string is **not** automatically eSpace. Core Space also uses hex40 addresses (`0x1` / `0x8` / `0x0` prefixes) that must be converted to CIP-37 (`cfx:` / `cfxtest:`) before `cfx_*` RPC calls. eSpace uses standard `0x` EIP-55 addresses with `eth_*` RPC. See [Core Space addresses](https://doc.confluxnetwork.org/docs/core/core-space-basics/addresses).
 - Core and eSpace accounts are separate namespaces. The same key pair can map to different address strings in each space.
 - Cross-space operations use mapped addresses and dedicated bridge contracts; do not assume one address string works in both spaces. See [Spaces overview](https://doc.confluxnetwork.org/docs/general/conflux-basics/spaces) and [CrossSpaceCall](https://doc.confluxnetwork.org/docs/core/core-space-basics/internal-contracts/crossSpaceCall).
 - When passing addresses to RPC, use the format expected by the target namespace (`cfx_*` for Core, `eth_*` for eSpace).

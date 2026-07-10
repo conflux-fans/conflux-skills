@@ -168,6 +168,12 @@ Mandatory sequence for Core Space writes:
 
 **Never send transaction without successful estimation. 未估算不得发送。**
 
+Mainnet write risk warning (read before any send example):
+
+- Mainnet writes are irreversible and may consume real CFX (gas + storage collateral).
+- Run the same flow on testnet first and verify `to`, `data`, `value`, nonce, and chain ID before mainnet execution.
+- Show the write risk template from [shared-concepts.md](shared-concepts.md) and wait for explicit user approval before calling `sendTransaction`.
+
 ### Reference Flow
 
 ```js
@@ -212,10 +218,10 @@ if (status.chainId !== expectedChainId) {
 // Do not call sendTransaction until the user confirms.
 
 // 5) send tx
+// Omit gas and storageLimit so js-conflux-sdk auto-fills from its internal estimate.
+// Preflight estimation above is still required for validation and user review.
 const pending = conflux.cfx.sendTransaction({
   ...txParams,
-  gas: estimation.gasLimit ?? estimation.gasUsed,
-  storageLimit: estimation.storageCollateralized,
   nonce: nextNonce,
 });
 const txHash = await pending;
@@ -241,11 +247,6 @@ cast rpc cfx_estimateGasAndCollateral \
 cast rpc cfx_sendRawTransaction 0xSIGNED_RAW_TX --rpc-url "$CFX_RPC_URL"
 cast rpc cfx_getTransactionReceipt 0xYOUR_TX_HASH --rpc-url "$CFX_RPC_URL"
 ```
-
-Mainnet write risk warning:
-
-- Mainnet writes are irreversible and may consume real CFX (gas + storage collateral).
-- Run the same flow on testnet first and verify `to`, `data`, `value`, nonce, and chain ID before mainnet execution.
 
 ## Troubleshooting
 
