@@ -46,8 +46,8 @@ description: Conflux RPC guidance with fully guided Core Space workflows and v1 
 - For Core Space writes, preflight `cfx_estimateGasAndCollateral` is required before send; do not construct or send transactions until it succeeds.
 - Do not skip this preflight in v1.
 - If estimation fails, stop and debug root cause before retrying writes.
-- Show explicit mainnet risk warning before write operations:
-  - transactions are irreversible once finalized
+- Show the write risk template from [shared-concepts.md](shared-concepts.md) before write operations, then wait for explicit user approval before any send step.
+  - transactions are irreversible once finalized on mainnet
   - real asset loss is possible on parameter mistakes
   - user should verify to/from address, value, gas-related fields, and nonce assumptions
 - Prefer read-only reproduction first when debugging ambiguous failures.

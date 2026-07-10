@@ -4,6 +4,8 @@ Core Space RPC guidance for read and write workflows.
 
 ## Read Operations
 
+Set both `CFX_RPC_URL` and `CFX_CHAIN_ID` to match the target network (see [network-matrix.md](network-matrix.md)). Do not rely on RPC URL alone.
+
 Use `js-conflux-sdk` as the default path. Use `cast rpc cfx_*` as a quick direct RPC comparison path when needed.
 
 ### Balance (`cfx_getBalance`)
@@ -160,7 +162,7 @@ Mandatory sequence for Core Space writes:
 1. build params
 2. `cfx_estimateGasAndCollateral`
 3. network/sender check
-4. show mainnet risk template from [shared-concepts.md](shared-concepts.md) and wait for explicit user approval
+4. show the write risk template from [shared-concepts.md](shared-concepts.md) (mainnet template for mainnet; testnet confirmation wording for testnet) and wait for explicit user approval
 5. send tx
 6. receipt verify
 
@@ -206,13 +208,13 @@ if (status.chainId !== expectedChainId) {
 }
 
 // 4) user approval gate (required before send)
-// Show the mainnet write risk template from shared-concepts.md and wait for explicit approval.
+// Show the write risk template from shared-concepts.md (mainnet vs testnet wording) and wait for explicit approval.
 // Do not call sendTransaction until the user confirms.
 
 // 5) send tx
 const pending = conflux.cfx.sendTransaction({
   ...txParams,
-  gas: estimation.gasUsed,
+  gas: estimation.gasLimit ?? estimation.gasUsed,
   storageLimit: estimation.storageCollateralized,
   nonce: nextNonce,
 });
@@ -253,7 +255,11 @@ Mainnet write risk warning:
 - Re-run `cfx_estimateGasAndCollateral`; if it fails, fix reason before any resend.
 - Confirm RPC endpoint and chain/network are expected (mainnet vs testnet).
 - Verify address format and method calldata.
+
+### execution failed (receipt available)
+
 - Read `receipt.txExecErrorMsg` when `outcomeStatus !== 0`; this field often explains Core execution failure.
+- Compare `gasUsed` and `storageLimit` against estimation if failure looks resource-related.
 
 ### transaction stuck (nonce/pending)
 

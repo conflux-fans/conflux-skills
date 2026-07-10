@@ -18,7 +18,7 @@ Do not treat it as complete eSpace implementation guidance.
 
 1. Start from the Developer Quickstart to understand environment, tooling, and network context.
 2. Then read the common `eth_*` methods entry for day-to-day query and transaction APIs.
-3. Use the community FAQ entry (and `conflux-scan-rpc` for read-only receipt/log inspection) when diagnosing pending tx, failed receipt, or missing log issues.
+3. Use the community FAQ entry and `conflux-scan-rpc` (**eSpace-only** read-only receipt/log inspection) when diagnosing pending tx, failed receipt, or missing log issues.
 
 ## Semantic Boundary (Core vs eSpace)
 
