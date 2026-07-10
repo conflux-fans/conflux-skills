@@ -35,7 +35,7 @@ cast rpc cfx_getBalance \
 `curl` JSON-RPC fallback:
 
 ```bash
-curl -s "$CFX_RPC_URL" \
+curl -s -X POST "$CFX_RPC_URL" \
   -H "Content-Type: application/json" \
   -d '{
     "jsonrpc": "2.0",
@@ -55,7 +55,10 @@ curl -s "$CFX_RPC_URL" \
 ```js
 import { Conflux } from "js-conflux-sdk";
 
-const conflux = new Conflux({ url: process.env.CFX_RPC_URL });
+const conflux = new Conflux({
+  url: process.env.CFX_RPC_URL,
+  networkId: Number(process.env.CFX_CHAIN_ID || 1029),
+});
 const address = "cfx:aarc9abycue0hhzgyrr53m6cxedgccrmmyybjgh4xg";
 const account = await conflux.cfx.getAccount(address, "latest_state");
 console.log(account);
@@ -77,7 +80,10 @@ cast rpc cfx_getAccount \
 ```js
 import { Conflux } from "js-conflux-sdk";
 
-const conflux = new Conflux({ url: process.env.CFX_RPC_URL });
+const conflux = new Conflux({
+  url: process.env.CFX_RPC_URL,
+  networkId: Number(process.env.CFX_CHAIN_ID || 1029),
+});
 const status = await conflux.cfx.getStatus();
 console.log(status);
 ```
@@ -95,7 +101,10 @@ cast rpc cfx_getStatus --rpc-url "$CFX_RPC_URL"
 ```js
 import { Conflux } from "js-conflux-sdk";
 
-const conflux = new Conflux({ url: process.env.CFX_RPC_URL });
+const conflux = new Conflux({
+  url: process.env.CFX_RPC_URL,
+  networkId: Number(process.env.CFX_CHAIN_ID || 1029),
+});
 
 const result = await conflux.cfx.call(
   {
@@ -125,7 +134,10 @@ cast rpc cfx_call \
 ```js
 import { Conflux } from "js-conflux-sdk";
 
-const conflux = new Conflux({ url: process.env.CFX_RPC_URL });
+const conflux = new Conflux({
+  url: process.env.CFX_RPC_URL,
+  networkId: Number(process.env.CFX_CHAIN_ID || 1029),
+});
 const txHash = "0xYOUR_TX_HASH";
 
 const tx = await conflux.cfx.getTransactionByHash(txHash);
@@ -148,8 +160,9 @@ Mandatory sequence for Core Space writes:
 1. build params
 2. `cfx_estimateGasAndCollateral`
 3. network/sender check
-4. send tx
-5. receipt verify
+4. show mainnet risk template from [shared-concepts.md](shared-concepts.md) and wait for explicit user approval
+5. send tx
+6. receipt verify
 
 **Never send transaction without successful estimation. 未估算不得发送。**
 
@@ -176,9 +189,10 @@ const txParams = {
 
 // 2) estimate first (required)
 const estimation = await conflux.cfx.estimateGasAndCollateral(txParams);
-if (!estimation || !estimation.gasUsed || !estimation.storageCollateralized) {
+if (!estimation || estimation.gasUsed == null || estimation.storageCollateralized == null) {
   throw new Error("cfx_estimateGasAndCollateral failed; stop sending.");
 }
+// storageCollateralized may be 0 for simple CFX transfers; that is valid.
 
 // 3) network/sender check
 const expectedChainId = Number(process.env.CFX_CHAIN_ID || 1029);
@@ -191,7 +205,11 @@ if (status.chainId !== expectedChainId) {
   throw new Error(`Network mismatch: ${status.chainId}`);
 }
 
-// 4) send tx
+// 4) user approval gate (required before send)
+// Show the mainnet write risk template from shared-concepts.md and wait for explicit approval.
+// Do not call sendTransaction until the user confirms.
+
+// 5) send tx
 const pending = conflux.cfx.sendTransaction({
   ...txParams,
   gas: estimation.gasUsed,
@@ -201,7 +219,7 @@ const pending = conflux.cfx.sendTransaction({
 const txHash = await pending;
 console.log("sent", txHash);
 
-// 5) receipt verify
+// 6) receipt verify
 const receipt = await pending.confirmed();
 if (!receipt || receipt.outcomeStatus !== 0) {
   throw new Error(`Transaction failed, receipt outcomeStatus=${receipt?.outcomeStatus}`);
@@ -235,6 +253,7 @@ Mainnet write risk warning:
 - Re-run `cfx_estimateGasAndCollateral`; if it fails, fix reason before any resend.
 - Confirm RPC endpoint and chain/network are expected (mainnet vs testnet).
 - Verify address format and method calldata.
+- Read `receipt.txExecErrorMsg` when `outcomeStatus !== 0`; this field often explains Core execution failure.
 
 ### transaction stuck (nonce/pending)
 

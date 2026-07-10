@@ -50,7 +50,7 @@ Boundary rules:
 - Default to read-only inspection when debugging ambiguous failures.
 - For Core Space writes, run `cfx_estimateGasAndCollateral` and confirm network before any send step.
 - For eSpace in v1, route deep troubleshooting to official docs; this skill does not provide full write playbooks for eSpace.
-- Prefer `conflux-scan-rpc` for read-only on-chain inspection when the task is inspection-only.
+- For **eSpace-only** read-only inspection, prefer `conflux-scan-rpc`. For Core Space reads, use [core-space.md](core-space.md).
 
 ## Mainnet Write Risk Warning Template
 

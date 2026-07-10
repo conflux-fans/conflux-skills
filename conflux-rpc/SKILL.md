@@ -7,7 +7,7 @@ description: Conflux RPC guidance with fully guided Core Space workflows and v1 
 
 ## Scope
 
-- Support Conflux RPC workflows with a Core Space-first default in v1.
+- Support Conflux RPC workflows with full Core Space guidance in v1.
 - Fully support Core Space read and write guidance in this version.
 - Keep eSpace as navigation-only in v1: route users to eSpace command style and method families, but avoid deep eSpace troubleshooting playbooks here.
 - Apply when users ask about method selection, `call`/`send` flows, transaction debugging, or which command family matches Core vs eSpace.
@@ -29,7 +29,7 @@ description: Conflux RPC guidance with fully guided Core Space workflows and v1 
 
 ### Core Space
 
-- Default: `js-conflux-sdk` for most Core Space flows.
+- Default: `js-conflux-sdk` v2+ (`conflux.cfx.*` API) for most Core Space flows.
 - Optional: `cast rpc cfx_*` when user explicitly prefers Foundry CLI or needs quick single-call checks.
 - Fallback: `curl` with raw JSON-RPC payloads for environment-agnostic verification.
 
@@ -63,9 +63,10 @@ Load only the file that matches the user's space and task:
 
 ## Related skills
 
-- `conflux-scan-rpc` for read-only on-chain inspection and transaction state checks.
+- `conflux-scan-rpc` for **eSpace-only** read-only on-chain inspection and transaction state checks.
 - `conflux-docs` for official Conflux documentation navigation and source grounding.
 - `conflux-dev` for contract build, deploy, and integration workflows.
+- For Core Space read-only queries, use [core-space.md](core-space.md) instead of `conflux-scan-rpc`.
 - For cross-skill discovery and install details, see `SKILL_LIST.md`.
 
 ## Official References
