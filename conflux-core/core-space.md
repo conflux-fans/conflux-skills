@@ -166,15 +166,18 @@ Mandatory sequence for Core Space writes:
 5. send tx
 6. receipt verify
 
-**Never send transaction without successful estimation. 未估算不得发送。**
+**Never send a transaction without a successful `cfx_estimateGasAndCollateral` preflight.**
 
 Mainnet write risk warning (read before any send example):
 
 - Mainnet writes are irreversible and may consume real CFX (gas + storage collateral).
-- Run the same flow on testnet first and verify `to`, `data`, `value`, nonce, and chain ID before mainnet execution.
+- Before mainnet execution, verify `to`, `data`, `value`, nonce, and chain ID on the **target mainnet** endpoint. Do not assume a testnet rehearsal covers contract calls — mainnet and testnet contracts often differ, and a mainnet contract may not exist on testnet.
+- For simple native CFX transfers only, an optional testnet dry run can help validate the send flow; for contract writes, confirm the contract exists on mainnet (for example via `cfx_getCode`) instead of relying on testnet parity.
 - Show the write risk template from [shared-concepts.md](shared-concepts.md) and wait for explicit user approval before calling `sendTransaction`.
 
 ### Reference Flow
+
+Minimal native transfer / empty-call example (`value` + `data: "0x"`). Contract writes use the same sequence; only `txParams` construction changes (see below).
 
 ```js
 import { Conflux } from "js-conflux-sdk";
@@ -234,6 +237,52 @@ if (!receipt || receipt.outcomeStatus !== 0) {
 }
 console.log("confirmed", receipt);
 ```
+
+### Contract Write (`data` with calldata)
+
+Use the same mandatory sequence as above. For contract calls, set `to` to the contract address and `data` to the encoded function call. Prefer a read-only `cfx_call` with the same `to`/`data`/`from` first to catch revert reasons before sending.
+
+**Option A — `js-conflux-sdk` Contract helper (recommended when ABI is known):**
+
+```js
+const contract = conflux.Contract({ abi, address: contractAddress });
+
+// Read-only check first (same params as the write)
+await contract.myMethod(arg1, arg2).call({ from: senderAddress });
+
+// Write: SDK builds calldata and follows the same estimate → approve → send flow
+const pending = contract.myMethod(arg1, arg2).sendTransaction({ from: senderAddress });
+const txHash = await pending;
+const receipt = await pending.confirmed();
+```
+
+Still run `cfx_estimateGasAndCollateral` on the built transaction params before send when you need to show gas/collateral to the user or when not using the Contract helper's built-in estimate path.
+
+**Option B — manual `txParams` (when you already have calldata):**
+
+```js
+const txParams = {
+  from: senderAddress,
+  to: contractAddress,           // cfx:... or cfxtest:...
+  value: "0x0",                  // set non-zero for payable functions
+  data: "0x70a08231" + paddedArgs, // 4-byte selector + ABI-encoded arguments
+};
+
+const estimation = await conflux.cfx.estimateGasAndCollateral(txParams);
+// ...same network check, user approval, send, receipt verify as Reference Flow
+```
+
+Calldata sources:
+
+- `contract.methodName(args).data` from `js-conflux-sdk` Contract
+- ABI encode offline (Foundry `cast calldata`, etc.) then paste into `data`
+- Reuse the `data` field from a successful read-only `cfx_call` in the Read Operations section
+
+Contract-write checks before send:
+
+- Confirm contract bytecode exists on the target network (`cfx_getCode` not empty).
+- For payable calls, set `value` and include it in estimation.
+- Expect non-zero `storageCollateralized` when the call writes storage; zero collateral alone does not mean failure.
 
 Quick `cast rpc` checks:
 

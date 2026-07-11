@@ -22,10 +22,9 @@ Small collection of reusable Codex skills for Conflux-related development workfl
 ├── conflux-scan-rpc/
 │   ├── SKILL.md
 │   └── api-endpoints.md
-├── conflux-rpc/
+├── conflux-core/
 │   ├── SKILL.md
 │   ├── core-space.md
-│   ├── espace.md
 │   ├── network-matrix.md
 │   └── shared-concepts.md
 ├── conflux-eip-6963-wallet/
@@ -69,12 +68,12 @@ Run read-only Conflux eSpace state inspection workflows (transactions, receipts,
 npx skills add https://github.com/conflux-fans/conflux-skills --skill conflux-scan-rpc
 ```
 
-### conflux-rpc
+### conflux-core
 
-Route Core Space vs eSpace RPC flows, with Core Space write safety defaults such as network confirmation, preflight estimation, and explicit risk checks.
+Core Space RPC workflows: `cfx_*` read/write guidance, contract calls, transaction debugging, and safe send defaults (preflight `cfx_estimateGasAndCollateral`, network confirmation, explicit user approval).
 
 ```sh
-npx skills add https://github.com/conflux-fans/conflux-skills --skill conflux-rpc
+npx skills add https://github.com/conflux-fans/conflux-skills --skill conflux-core
 ```
 
 ### conflux-eip-6963-wallet
