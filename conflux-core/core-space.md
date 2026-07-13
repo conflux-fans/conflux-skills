@@ -15,7 +15,7 @@ Use `js-conflux-sdk` as the default path. Use `cast rpc cfx_*` as a quick direct
 `js-conflux-sdk`:
 
 ```js
-import { Conflux } from "js-conflux-sdk";
+const { Conflux } = require("js-conflux-sdk");
 
 const conflux = new Conflux({
   url: process.env.CFX_RPC_URL,
@@ -57,7 +57,7 @@ curl -s -X POST "$CFX_RPC_URL" \
 `js-conflux-sdk`:
 
 ```js
-import { Conflux } from "js-conflux-sdk";
+const { Conflux } = require("js-conflux-sdk");
 
 const conflux = new Conflux({
   url: process.env.CFX_RPC_URL,
@@ -82,7 +82,7 @@ cast rpc cfx_getAccount \
 `js-conflux-sdk`:
 
 ```js
-import { Conflux } from "js-conflux-sdk";
+const { Conflux } = require("js-conflux-sdk");
 
 const conflux = new Conflux({
   url: process.env.CFX_RPC_URL,
@@ -103,7 +103,7 @@ cast rpc cfx_getStatus --rpc-url "$CFX_RPC_URL"
 `js-conflux-sdk`:
 
 ```js
-import { Conflux } from "js-conflux-sdk";
+const { Conflux } = require("js-conflux-sdk");
 
 const conflux = new Conflux({
   url: process.env.CFX_RPC_URL,
@@ -136,7 +136,7 @@ cast rpc cfx_call \
 `js-conflux-sdk`:
 
 ```js
-import { Conflux } from "js-conflux-sdk";
+const { Conflux } = require("js-conflux-sdk");
 
 const conflux = new Conflux({
   url: process.env.CFX_RPC_URL,
@@ -182,7 +182,7 @@ Mainnet write risk warning (read before any send example):
 Minimal native transfer / empty-call example (`value` + `data: "0x"`). Contract writes use the same sequence; only `txParams` construction changes (see below).
 
 ```js
-import { Conflux } from "js-conflux-sdk";
+const { Conflux } = require("js-conflux-sdk");
 
 const conflux = new Conflux({
   url: process.env.CFX_RPC_URL,
@@ -221,6 +221,9 @@ if (status.chainId !== expectedChainId) {
 // 4) user approval gate (required before send)
 // Show the write risk template from shared-concepts.md (mainnet vs testnet wording) and wait for explicit approval.
 // Do not call sendTransaction until the user confirms.
+if (process.env.CFX_APPROVE_SEND !== "yes") {
+  throw new Error("Set CFX_APPROVE_SEND=yes only after explicit user approval.");
+}
 
 // 5) send tx
 // Omit gas and storageLimit so js-conflux-sdk auto-fills from its internal estimate.
@@ -252,13 +255,28 @@ const contract = conflux.Contract({ abi, address: contractAddress });
 // Read-only check first (same params as the write)
 await contract.myMethod(arg1, arg2).call({ from: senderAddress });
 
-// Write: SDK builds calldata and follows the same estimate → approve → send flow
-const pending = contract.myMethod(arg1, arg2).sendTransaction({ from: senderAddress });
+// Write: SDK builds calldata, but you still estimate the built tx params before any send.
+const writeCall = contract.myMethod(arg1, arg2);
+const txParams = {
+  from: senderAddress,
+  to: contractAddress,
+  value: "0x0",
+  data: writeCall.data,
+};
+const estimation = await conflux.cfx.estimateGasAndCollateral(txParams);
+if (!estimation || estimation.gasUsed == null || estimation.storageCollateralized == null) {
+  throw new Error("cfx_estimateGasAndCollateral failed; stop sending.");
+}
+// Show risk template from shared-concepts.md and wait for explicit approval before send.
+if (process.env.CFX_APPROVE_SEND !== "yes") {
+  throw new Error("Set CFX_APPROVE_SEND=yes only after explicit user approval.");
+}
+const pending = writeCall.sendTransaction({ from: senderAddress });
 const txHash = await pending;
 const receipt = await pending.confirmed();
 ```
 
-Still run `cfx_estimateGasAndCollateral` on the built transaction params before send when you need to show gas/collateral to the user or when not using the Contract helper's built-in estimate path.
+Always run `cfx_estimateGasAndCollateral` on the built transaction params before send. The Contract helper can build calldata and fill send fields, but it does not replace the required preflight/collateral review and explicit approval gate.
 
 **Option B — manual `txParams` (when you already have calldata):**
 

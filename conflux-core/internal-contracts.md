@@ -58,7 +58,7 @@ Supported methods:
 `js-conflux-sdk` example:
 
 ```js
-import { Conflux } from "js-conflux-sdk";
+const { Conflux } = require("js-conflux-sdk");
 
 const conflux = new Conflux({
   url: process.env.CFX_RPC_URL,
@@ -72,6 +72,9 @@ const newAdmin = "cfxtest:aak2rra2njvd77ezwjvx04kkds9fzagfe6ku8scz91";
 
 const currentAdmin = await adminControl.getAdmin(contractAddr).call();
 console.log("current admin", currentAdmin);
+if (currentAdmin.toLowerCase() !== sender.address.toLowerCase()) {
+  throw new Error("setAdmin requires the current contract admin; stop before estimate/send.");
+}
 
 const setAdminCall = adminControl.setAdmin(contractAddr, newAdmin);
 await conflux.cfx.estimateGasAndCollateral({
@@ -81,7 +84,15 @@ await conflux.cfx.estimateGasAndCollateral({
   data: setAdminCall.data,
 });
 // Show risk template from shared-concepts.md and wait for user approval before send.
-await setAdminCall.sendTransaction({ from: sender }).executed();
+if (process.env.CFX_APPROVE_SEND !== "yes") {
+  throw new Error("Set CFX_APPROVE_SEND=yes only after explicit user approval.");
+}
+await setAdminCall.sendTransaction({ from: sender.address }).executed();
+const updatedAdmin = await adminControl.getAdmin(contractAddr).call();
+console.log("updated admin", updatedAdmin);
+if (updatedAdmin.toLowerCase() !== newAdmin.toLowerCase()) {
+  throw new Error("setAdmin transaction executed but admin did not change; inspect sender permissions and receipt.");
+}
 ```
 
 `destroy` is extremely high risk and disabled after CIP-151 on current networks. Do not include a default executable `destroy` example in this skill.
@@ -100,7 +111,7 @@ Typical methods:
 `js-conflux-sdk` example:
 
 ```js
-import { Conflux } from "js-conflux-sdk";
+const { Conflux } = require("js-conflux-sdk");
 
 const conflux = new Conflux({
   url: process.env.CFX_RPC_URL,
@@ -112,13 +123,15 @@ const sponsor = conflux.InternalContract('SponsorWhitelistControl');
 const contractAddr = "cfxtest:acepe88unk7fvs18436178up33hb4zkuf62a9dk1gv";
 
 const upperBound = 10n ** 15n; // Drip
-const sponsorValue = 1000n * upperBound; // must be >= 1000 * upperBound
-if (sponsorValue < 1000n * upperBound) {
-  throw new Error("setSponsorForGas value must be >= 1000 * upperBound");
+const currentGasBalance = BigInt(await sponsor.getSponsoredBalanceForGas(contractAddr).call());
+const sponsorValue = 1000n * upperBound + currentGasBalance;
+if (sponsorValue < 1000n * upperBound || sponsorValue <= currentGasBalance) {
+  throw new Error("setSponsorForGas value must be >= 1000 * upperBound and exceed current sponsored gas balance when replacing a sponsor");
 }
 
 const beforeInfo = await sponsor.getSponsoredGasFeeUpperBound(contractAddr).call();
 console.log("before upper bound", beforeInfo.toString());
+console.log("current sponsored gas balance", currentGasBalance.toString());
 
 const setGasCall = sponsor.setSponsorForGas(contractAddr, upperBound);
 await conflux.cfx.estimateGasAndCollateral({
@@ -128,8 +141,11 @@ await conflux.cfx.estimateGasAndCollateral({
   data: setGasCall.data,
 });
 // Show risk template from shared-concepts.md and wait for user approval before send.
+if (process.env.CFX_APPROVE_SEND !== "yes") {
+  throw new Error("Set CFX_APPROVE_SEND=yes only after explicit user approval.");
+}
 await setGasCall.sendTransaction({
-  from: sender,
+  from: sender.address,
   value: sponsorValue,
 }).executed();
 ```
@@ -150,7 +166,7 @@ Supported methods:
 `js-conflux-sdk` example:
 
 ```js
-import { Conflux } from "js-conflux-sdk";
+const { Conflux } = require("js-conflux-sdk");
 
 const conflux = new Conflux({
   url: process.env.CFX_RPC_URL,
@@ -172,7 +188,10 @@ await conflux.cfx.estimateGasAndCollateral({
   data: depositCall.data,
 });
 // Show risk template from shared-concepts.md and wait for user approval before send.
-await depositCall.sendTransaction({ from: sender }).executed();
+if (process.env.CFX_APPROVE_SEND !== "yes") {
+  throw new Error("Set CFX_APPROVE_SEND=yes only after explicit user approval.");
+}
+await depositCall.sendTransaction({ from: sender.address }).executed();
 ```
 
 `voteLock` warning:
@@ -195,7 +214,7 @@ Supported read methods:
 `js-conflux-sdk` read example (testnet):
 
 ```js
-import { Conflux } from "js-conflux-sdk";
+const { Conflux } = require("js-conflux-sdk");
 
 const conflux = new Conflux({
   url: process.env.CFX_RPC_URL,
