@@ -23,8 +23,18 @@ Normalization notes:
 
 Additional notes:
 
-- Core Space writes involve **storage collateral** (separate from gas). Estimate with `cfx_estimateGasAndCollateral` before sending. See [storage](https://doc.confluxnetwork.org/docs/core/core-space-basics/storage) and [gas](https://doc.confluxnetwork.org/docs/general/conflux-basics/gas).
+- Core Space writes may also require **storage collateral** (separate from gas). See [Storage Collateral (brief)](#storage-collateral-brief) below.
 - Gas fields (`gas`, `gasPrice`, etc.) are measured in gas units; fees are charged in Drip. Do not confuse gas units with CFX/Drip amounts.
+
+## Storage Collateral (brief)
+
+Core Space charges gas for execution and may lock CFX as storage collateral when a write occupies on-chain storage. Treat these as separate costs.
+
+- Simple CFX transfers usually have zero storage collateral; contract writes and state changes may require non-zero collateral.
+- Preflight with `cfx_estimateGasAndCollateral` before any send. Review `storageCollateralized` and `storageLimit` alongside gas fields.
+- Ensure the sender balance covers both gas fees and storage collateral on mainnet.
+- Collateral is locked while storage is occupied; it can be released when that storage is freed. See [Storage (CFS)](https://doc.confluxnetwork.org/docs/core/core-space-basics/storage) for mechanism details.
+- Estimation, send flow, and collateral troubleshooting: [core-space.md](core-space.md).
 
 ## Read vs Write Boundary
 
@@ -74,4 +84,6 @@ For testnet writes, still confirm network and parameters, but replace the mainne
 ## Related References
 
 - [Core Space addresses](https://doc.confluxnetwork.org/docs/core/core-space-basics/accounts)
+- [Storage (CFS)](https://doc.confluxnetwork.org/docs/core/core-space-basics/storage)
+- [Gas](https://doc.confluxnetwork.org/docs/general/conflux-basics/gas)
 - [Core JSON-RPC portal](https://doc.confluxnetwork.org/docs/core/build/json-rpc/)
