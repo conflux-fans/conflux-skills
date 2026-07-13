@@ -42,14 +42,16 @@ description: Core Space RPC guidance for read/write flows, cfx_* method selectio
 ## Reference Files
 
 - [core-space.md](core-space.md) — Read/write workflows, contract calls, estimation gate, and troubleshooting.
-- [shared-concepts.md](shared-concepts.md) — Core addresses, units, storage collateral, read/write boundaries, and mainnet risk template.
+- [shared-concepts.md](shared-concepts.md) — Core addresses, units, storage collateral, internal contracts (brief), read/write boundaries, and mainnet risk template.
 - [network-matrix.md](network-matrix.md) — Core mainnet/testnet mapping and official RPC/explorer entry links.
 - [internal-contracts.md](internal-contracts.md) — Internal contract addresses, method indexes, and safe call/send patterns.
 
 ## Related skills
 
 - `conflux-docs` — official Conflux documentation navigation and source grounding.
-- For cross-skill discovery and install details, see `SKILL_LIST.md`.
+- `conflux-scan-rpc` — read-only eSpace state inspection (`eth_*`); use for eSpace, not Core Space.
+
+Check the [Conflux skill list](https://github.com/conflux-fans/conflux-skills/blob/main/SKILL_LIST.md) to get any mentioned skill if needed.
 
 ## Official References
 

@@ -41,7 +41,8 @@ More: [reference-apps.md](reference-apps.md).
 ## Related skills
 
 - **conflux-docs** — doc links and concepts.
+- **conflux-core** — Core Space RPC (`cfx_*`), internal contracts, and cross-space Core-side calls; use when the task involves `cfx:` / `cfxtest:` addresses or Core JSON-RPC instead of eSpace.
 - **conflux-eip-6963-wallet** — multi-wallet connect via EIP-6963 (not `window.ethereum`).
-- **conflux-scan-rpc** — read-only tx/balance/receipt analysis.
+- **conflux-scan-rpc** — read-only eSpace tx/balance/receipt analysis (`eth_*`); not for Core Space (`cfx_*`).
 
 Check the [Conflux skill list](https://github.com/conflux-fans/conflux-skills/blob/main/SKILL_LIST.md) to get any mentioned skill if needed.

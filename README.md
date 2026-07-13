@@ -25,6 +25,7 @@ Small collection of reusable Codex skills for Conflux-related development workfl
 ├── conflux-core/
 │   ├── SKILL.md
 │   ├── core-space.md
+│   ├── internal-contracts.md
 │   ├── network-matrix.md
 │   └── shared-concepts.md
 ├── conflux-eip-6963-wallet/
@@ -70,7 +71,7 @@ npx skills add https://github.com/conflux-fans/conflux-skills --skill conflux-sc
 
 ### conflux-core
 
-Core Space RPC workflows: `cfx_*` read/write guidance, contract calls, transaction debugging, and safe send defaults (preflight `cfx_estimateGasAndCollateral`, network confirmation, explicit user approval).
+Core Space RPC workflows: `cfx_*` read/write guidance, internal contracts (SponsorWhitelistControl, Staking, AdminControl, and others), contract calls, transaction debugging, and safe send defaults (preflight `cfx_estimateGasAndCollateral`, network confirmation, explicit user approval).
 
 ```sh
 npx skills add https://github.com/conflux-fans/conflux-skills --skill conflux-core
@@ -91,3 +92,4 @@ npx skills add https://github.com/conflux-fans/conflux-skills --skill conflux-ei
 - `conflux-rust-integration-test/assets/` contains test templates and examples.
 - `conflux-rust-integration-test/references/` contains detailed testing references.
 - `conflux-eip-6963-wallet/reference-patterns.md` contains React + viem + Conflux eSpace wallet discovery patterns.
+- `conflux-core/internal-contracts.md` contains Core Space internal contract addresses, method indexes, and RPC/SDK call patterns.

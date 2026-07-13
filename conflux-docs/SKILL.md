@@ -89,7 +89,8 @@ For more concept links, see [reference.md](reference.md) in this skill.
 
 ## Related skills
 
-- **conflux-scan-rpc** — inspect txs, receipts, balances (read-only).
+- **conflux-scan-rpc** — read-only eSpace tx/receipt/balance inspection (`eth_*`); not for Core Space (`cfx_*`).
 - **conflux-dev** — deploy, verify contracts, integrate apps.
+- **conflux-core** — executable Core Space RPC workflows (`cfx_*`), internal contracts, and safe send guidance; use when the user needs Core Space operations beyond doc links.
 
 Check the [Conflux skill list](https://github.com/conflux-fans/conflux-skills/blob/main/SKILL_LIST.md) to get any mentioned skill if needed.

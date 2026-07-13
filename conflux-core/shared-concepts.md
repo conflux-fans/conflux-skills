@@ -92,7 +92,8 @@ For testnet writes, still confirm network and parameters, but replace the mainne
 
 ## Related References
 
-- [Core Space addresses](https://doc.confluxnetwork.org/docs/core/core-space-basics/accounts)
+- [Core Space addresses](https://doc.confluxnetwork.org/docs/core/core-space-basics/addresses)
+- [Core Space accounts](https://doc.confluxnetwork.org/docs/core/core-space-basics/accounts)
 - [Storage (CFS)](https://doc.confluxnetwork.org/docs/core/core-space-basics/storage)
 - [Gas](https://doc.confluxnetwork.org/docs/general/conflux-basics/gas)
 - [Core JSON-RPC portal](https://doc.confluxnetwork.org/docs/core/build/json-rpc/)

@@ -6,6 +6,8 @@ Core Space RPC guidance for read and write workflows.
 
 Set both `CFX_RPC_URL` and `CFX_CHAIN_ID` to match the target network (see [network-matrix.md](network-matrix.md)). Do not rely on RPC URL alone.
 
+Code snippets in this file default to **Core mainnet** (`CFX_CHAIN_ID=1029`, `cfx:` addresses). For testnet, use `CFX_CHAIN_ID=1`, `cfxtest:` addresses, and a testnet RPC from [network-matrix.md](network-matrix.md). [internal-contracts.md](internal-contracts.md) examples target testnet instead — follow that file's Usage Defaults when copying internal-contract snippets.
+
 Use `js-conflux-sdk` as the default path. Use `cast rpc cfx_*` as a quick direct RPC comparison path when needed.
 
 ### Balance (`cfx_getBalance`)
