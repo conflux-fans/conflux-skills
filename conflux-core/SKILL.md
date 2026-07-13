@@ -1,6 +1,6 @@
 ---
 name: conflux-core
-description: Core Space RPC guidance for read/write flows, cfx_* method selection, contract calls, transaction debugging, and safe send defaults. Use when users work with Conflux Core Space JSON-RPC, js-conflux-sdk, or cast rpc cfx_*.
+description: Core Space RPC guidance for read/write flows, cfx_* method selection, internal contracts, transaction debugging, and safe send defaults. Use when users work with Conflux Core Space JSON-RPC, js-conflux-sdk, cast rpc cfx_*, or Core internal contracts such as SponsorWhitelistControl/Staking/AdminControl.
 ---
 
 # conflux-core
@@ -9,6 +9,7 @@ description: Core Space RPC guidance for read/write flows, cfx_* method selectio
 
 - Core Space RPC only: read, write guidance, estimation, and troubleshooting.
 - Apply when users ask about `cfx_*` methods, Core addresses (`cfx:` / `cfxtest:`), `cfx_call`, `cfx_estimateGasAndCollateral`, `cfx_sendTransaction`, or Core transaction debugging.
+- Cover Core internal contracts (`AdminControl`, `SponsorWhitelistControl`, `Staking`, `ConfluxContext`, `PoSRegister`, `CrossSpaceCall`, `ParamsControl`) under Core RPC constraints.
 - Do not use this skill for eSpace (`eth_*`) workflows.
 
 ## Intake
@@ -43,6 +44,7 @@ description: Core Space RPC guidance for read/write flows, cfx_* method selectio
 - [core-space.md](core-space.md) — Read/write workflows, contract calls, estimation gate, and troubleshooting.
 - [shared-concepts.md](shared-concepts.md) — Core addresses, units, storage collateral, read/write boundaries, and mainnet risk template.
 - [network-matrix.md](network-matrix.md) — Core mainnet/testnet mapping and official RPC/explorer entry links.
+- [internal-contracts.md](internal-contracts.md) — Internal contract addresses, method indexes, and safe call/send patterns.
 
 ## Related skills
 
@@ -58,3 +60,4 @@ description: Core Space RPC guidance for read/write flows, cfx_* method selectio
 - Pub/Sub: <https://doc.confluxnetwork.org/docs/core/build/json-rpc/pubsub>
 - Common errors: <https://doc.confluxnetwork.org/docs/core/build/json-rpc/common_rpc_error>
 - Enums and shared types: <https://doc.confluxnetwork.org/docs/core/build/json-rpc/common-enums>
+- Internal contracts overview: <https://doc.confluxnetwork.org/docs/core/core-space-basics/internal-contracts/>

@@ -15,6 +15,15 @@ Normalization notes:
 - Core Space also accepts hex40 addresses internally; convert to CIP-37 (`cfx:` / `cfxtest:`) for SDK and most RPC examples. See [Core Space addresses](https://doc.confluxnetwork.org/docs/core/core-space-basics/addresses).
 - Pass CIP-37 addresses to `cfx_*` methods unless the RPC docs explicitly allow hex40 for that call.
 
+## Internal Contracts (brief)
+
+Core Space includes seven built-in internal contracts. Use [internal-contracts.md](internal-contracts.md) for the canonical address table and method grouping.
+
+- Only `CALL` and `STATICCALL` are valid for internal contracts. `CALLCODE` and `DELEGATECALL` fail.
+- Read via `cfx_call` / `.call()` first when possible.
+- For writes, keep the same sequence as normal contract writes: estimate -> explicit user approval -> send.
+- For sponsor state checks, `cfx_getSponsorInfo` is the quickest RPC shortcut.
+
 ## Unit Conventions
 
 | Native asset | Smallest unit | Typical RPC / SDK representation | Official reference |
@@ -87,3 +96,5 @@ For testnet writes, still confirm network and parameters, but replace the mainne
 - [Storage (CFS)](https://doc.confluxnetwork.org/docs/core/core-space-basics/storage)
 - [Gas](https://doc.confluxnetwork.org/docs/general/conflux-basics/gas)
 - [Core JSON-RPC portal](https://doc.confluxnetwork.org/docs/core/build/json-rpc/)
+- [Internal contracts (official)](https://doc.confluxnetwork.org/docs/core/core-space-basics/internal-contracts/)
+- [Internal contracts guide](internal-contracts.md)

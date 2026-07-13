@@ -297,6 +297,10 @@ cast rpc cfx_sendRawTransaction 0xSIGNED_RAW_TX --rpc-url "$CFX_RPC_URL"
 cast rpc cfx_getTransactionReceipt 0xYOUR_TX_HASH --rpc-url "$CFX_RPC_URL"
 ```
 
+For Core internal contracts (`AdminControl`, `SponsorWhitelistControl`, `Staking`, and others), reuse the same estimate -> approval -> send sequence in this section.
+Use [internal-contracts.md](internal-contracts.md) for canonical addresses, internal-contract method indexes, and copy-paste-safe examples.
+Keep CrossSpaceCall interactions on Core RPC while following its eSpace-targeted semantics from the official reference.
+
 ## Troubleshooting
 
 ### send failed immediately
