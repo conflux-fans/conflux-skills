@@ -22,6 +22,12 @@ Small collection of reusable Codex skills for Conflux-related development workfl
 ├── conflux-scan-rpc/
 │   ├── SKILL.md
 │   └── api-endpoints.md
+├── conflux-core/
+│   ├── SKILL.md
+│   ├── core-space.md
+│   ├── internal-contracts.md
+│   ├── network-matrix.md
+│   └── shared-concepts.md
 ├── conflux-eip-6963-wallet/
 │   ├── SKILL.md
 │   └── reference-patterns.md
@@ -63,6 +69,14 @@ Run read-only Conflux eSpace state inspection workflows (transactions, receipts,
 npx skills add https://github.com/conflux-fans/conflux-skills --skill conflux-scan-rpc
 ```
 
+### conflux-core
+
+Core Space RPC workflows: `cfx_*` read/write guidance, internal contracts (SponsorWhitelistControl, Staking, AdminControl, and others), contract calls, transaction debugging, and safe send defaults (preflight `cfx_estimateGasAndCollateral`, network confirmation, explicit user approval).
+
+```sh
+npx skills add https://github.com/conflux-fans/conflux-skills --skill conflux-core
+```
+
 ### conflux-eip-6963-wallet
 
 Generate modern multi-wallet connect flows with EIP-6963 instead of legacy `window.ethereum`. Use when asking AI to build or modify a dApp frontend with wallet connect.
@@ -78,3 +92,4 @@ npx skills add https://github.com/conflux-fans/conflux-skills --skill conflux-ei
 - `conflux-rust-integration-test/assets/` contains test templates and examples.
 - `conflux-rust-integration-test/references/` contains detailed testing references.
 - `conflux-eip-6963-wallet/reference-patterns.md` contains React + viem + Conflux eSpace wallet discovery patterns.
+- `conflux-core/internal-contracts.md` contains Core Space internal contract addresses, method indexes, and RPC/SDK call patterns.
